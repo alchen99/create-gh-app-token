@@ -19,6 +19,10 @@ struct Args {
     /// GitHub App Installation ID
     #[arg(short, long)]
     installation_id: String,
+
+    /// Output format (text or json)
+    #[arg(short, long, default_value = "text")]
+    format: String,
 }
 
 #[derive(Debug, Serialize)]
@@ -47,8 +51,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Exchange JWT for an installation token
     let token = get_installation_token(&jwt, &args.installation_id).await?;
     
-    println!("Installation Token: {}", token.token);
-    println!("Expires at: {}", token.expires_at);
+    // Output based on format
+    match args.format.to_lowercase().as_str() {
+        "json" => {
+            println!("{{\"token\": \"{}\", \"expires_at\": \"{}\"}}", token.token, token.expires_at);
+        }
+        "text" => {
+            println!("Installation Token: {}", token.token);
+            println!("Expires at: {}", token.expires_at);
+        }
+        _ => {
+            return Err("Invalid format. Use 'text' or 'json'".into());
+        }
+    }
     
     Ok(())
 }
