@@ -1,0 +1,18 @@
+[package]
+name = "create-gh-app-token"
+version = "0.0.1"
+edition = "2021"
+license = "MIT"
+authors = ["alchen99 <alchen99@users.noreply.github.com>"]
+description = "Command line tool to generate GitHub app token"
+repository = "https://github.com/alchen99/create-gh-app-token"
+documentation = "https://github.com/alchen99/create-gh-app-token/blob/main/README.md"
+keywords = ["github", "token", "http"]
+readme = "README.md"
+
+[dependencies]
+clap = { version = "4.4", features = ["derive"] }
+jsonwebtoken = "8.3"
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.32", features = ["full"] }
